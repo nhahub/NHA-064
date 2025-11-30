@@ -1,0 +1,14 @@
+gradio
+transformers
+accelerate
+bitsandbytes
+sentence-transformers
+faiss-cpu
+pypdf2
+duckduckgo-search
+beautifulsoup4
+requests
+huggingface_hub
+torch
+typing_extensions
+regex
