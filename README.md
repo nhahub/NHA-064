@@ -9,6 +9,8 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Gradio](https://img.shields.io/badge/Gradio-5.42.0-orange.svg)](https://gradio.app/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![HuggingFace Model](https://img.shields.io/badge/🤗%20Model-moamenshamed/fitmate-yellow.svg)](https://huggingface.co/moamenshamed/fitmate)
+[![Notebook](https://img.shields.io/badge/📓%20Notebook-fitmate.ipynb-purple.svg)](fitmate.ipynb)
 
 [Demo](#-demo) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Architecture](#-architecture) • [Documentation](#-documentation)
 
@@ -80,11 +82,66 @@ The application features a professional, dark-themed interface with:
 - **Knowledge Base Tab**: Document upload and management
 - **Settings Tab**: User preferences and model configuration
 
-### Live Demo
+### 🚀 Access FitMate
 
-🚀 **[Try FitMate Live](https://huggingface.co/spaces/YOUR_USERNAME/fitmate)** *(Replace with your actual Space URL)*
+**Live deployment is currently in progress.** In the meantime, you can use FitMate directly through:
 
-Working on it right now ...
+#### Option 1: Pre-trained Model on Hugging Face
+**Model**: [`moamenshamed/fitmate`](https://huggingface.co/moamenshamed/fitmate)
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+# Load model and tokenizer
+model_name = "moamenshamed/fitmate"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    device_map="auto",
+    load_in_4bit=True,  # Requires 4-bit quantization for lower VRAM
+    torch_dtype=torch.bfloat16
+)
+
+# Generate fitness advice
+prompt = "Create a 4-week muscle building program for beginners"
+inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+outputs = model.generate(**inputs, max_new_tokens=512, temperature=0.7)
+response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(response)
+```
+
+#### Option 2: Run Full App with `fitmate.ipynb` on Cloud GPUs
+
+The **`fitmate.ipynb`** notebook contains the complete FitMate application with RAG, web search, and full UI. Run it on any platform with GPU access:
+
+**📘 [Modal](https://modal.com)** (Recommended - Best Performance)
+1. Sign up at [Modal.com](https://modal.com)
+2. Upload `fitmate.ipynb` to Modal Notebooks
+3. Set `HF_TOKEN` environment variable in Modal settings
+4. Run all cells - Gets A100 GPU automatically
+5. Access via the generated public URL
+
+**⚡ [Lightning AI](https://lightning.ai)**
+1. Sign up at [Lightning.ai](https://lightning.ai)
+2. Create a new Studio
+3. Upload `fitmate.ipynb`
+4. Add `HF_TOKEN` to environment variables
+5. Select GPU (A10, L4, or higher)
+6. Run the notebook
+
+**🎓 [Google Colab](https://colab.research.google.com)** (Free Option)
+1. Upload `fitmate.ipynb` to Google Colab
+2. Go to Runtime → Change runtime type → Select GPU (T4 or better)
+3. Add your Hugging Face token:
+   ```python
+   import os
+   os.environ["HF_TOKEN"] = "your_huggingface_token_here"
+   ```
+4. Run all cells
+5. Access the Gradio interface via the public link
+
+> 💡 **Note**: For best performance, use Modal or Lightning AI with A100/A10G GPUs. The free Colab T4 GPU will be slower but functional.
 ---
 
 ## 🏗️ System Architecture
@@ -283,9 +340,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-**Moamen Sadd** , **Ahmed Samir** , **Mariam Ali** , **Salma Mohamed**
+**Moamen Saad**
 - GitHub: [@moamenshamed](https://github.com/moamenshamed)
 - Hugging Face: [@moamenshamed](https://huggingface.co/moamenshamed)
+
+**Ahmed Samir**
+- Team Member & Developer
+
+**Mariam Ali**
+- Team Member & Developer
+
+**Salma Mohamed**
+- Team Member & Developer
 
 **Project Supervisor**: [Eng: Mohamed ElMesawy]  
 **Institution**: [Digital Egypt Pioneers Initiative (DEPI)]  
@@ -305,6 +371,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **⭐ If you find this project useful, please consider giving it a star! ⭐**
 
-Made with ❤️ and 💪 by Moamen Saad
+Made with ❤️ and 💪 by Team FitMate
 
 </div>
