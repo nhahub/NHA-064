@@ -283,7 +283,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-**Moamen Shamed**
+**Moamen Sadd** , **Ahmed Samir** , **Mariam Ali** , **Salma Mohamed**
 - GitHub: [@moamenshamed](https://github.com/moamenshamed)
 - Hugging Face: [@moamenshamed](https://huggingface.co/moamenshamed)
 
